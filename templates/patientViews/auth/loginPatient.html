@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Animated Login Form coding by taha</title>
+    <link rel="stylesheet" href="../../../static/patientView/auth/loginStyle.css" />
+</head>
+
+<body>
+    <div class="center">
+        <h1>Login as Patient</h1>
+        <form method="post">
+            <div class="header">
+                <div class="txt_field">
+                    <input type="text" id="taha1" required />
+                    <span></span>
+                    <label id="taha0">Username</label>
+                </div>
+                <div class="txt_field">
+                    <input type="password" id="taha2" required />
+                    <span></span>
+                    <label>Password</label>
+                </div>
+                <input type="submit" value="Login" id="taha3" />
+                <div class="signup_link">
+                    Haven't have account? <a href="/signuppatient" id="taha4">Signup</a> <br>
+                    <a href="/" id="taha4">Go back to Home</a>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+        var header = document.getElementById("header");
+        var taha0 = document.getElementById("taha0");
+        var taha1 = document.getElementById("taha1");
+        var taha2 = document.getElementById("taha2");
+        var taha3 = document.getElementById("taha3");
+        var taha4 = document.getElementById("taha4");
+        var password1 = document.getElementById("password1");
+        taha0.onclick = function name() {
+            header.style.bakgroundImage = "url()";
+        };
+        taha2.onclick = function taha() {
+            resolve("taha");
+        };
+        taha3.onclick = function taha() {
+            window.alert("success");
+        };
+        password1.onclick = function nn() {
+            console.log("there the password has been added to your acc");
+        };
+        //now am wan to make another function because i want
+        taha0 + taha2 ==
+            function taha(username, password) {
+                username = "my name is taha kourane";
+                password = "tahakourani1234";
+                if (username != "my name is taha kourani") {
+                    window.alert("you have been error occured");
+                } else {
+                    window.alert("success");
+                }
+                if (password != "tahakourani1234") {
+                    console.log("the password is incorrect please try again");
+                } else {
+                    console.log("now the password is correct");
+                }
+            };
+    </script>
+</body>
+
+</html>

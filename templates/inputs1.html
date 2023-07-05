@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <title>Diabetes Prediction - Prediction Summary</title>
+    <style>
+      * {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: medium;
+      }
+      legend {
+        font-size: xx-large;
+        text-align: left;
+      }
+      .user-input-label {
+        text-align: left;
+      }
+    </style>
+</head>
+<body class="bg-light">
+
+    <div class="container mt-5">
+        <fieldset class="p-3">
+            <legend class="text-uppercase">Prediction Summary</legend>
+            
+            {% if name %}
+            <div class="row justify-content-center">
+                <div class="col-md-4 col-sm-12 mb-2 user-input-label">
+                    <label for="name">Name:</label>
+                </div>
+                <div class="col-md-8 col-sm-12">
+                    <p>{{ name }}</p>
+                </div>
+            </div>
+            {% endif %}
+            
+            <div class="row justify-content-center">
+                <div class="col-md-4 col-sm-12 mb-2 user-input-label">
+                    <label for="pregs">Pregnancies:</label>
+                </div>
+                <div class="col-md-8 col-sm-12">
+                    <p>{{ preg }}</p>
+                </div>
+            </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-md-4 col-sm-12 mb-2 user-input-label">
+                    <label for="gluc">Glucose Level:</label>
+                </div>
+                <div class="col-md-8 col-sm-12">
+                    <p>{{ gluc }}</p>
+                </div>
+            </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-md-4 col-sm-12 mb-2 user-input-label">
+                    <label for="bp">Blood Pressure:</label>
+                </div>
+                <div class="col-md-8 col-sm-12">
+                    <p>{{ bp }}</p>
+                </div>
+            </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-md-4 col-sm-12 mb-2 user-input-label">
+                    <label for="skin">Skin Thickness:</label>
+                </div>
+                <div class="col-md-8 col-sm-12">
+                    <p>{{ skin }}</p>
+                </div>
+            </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-md-4 col-sm-12 mb-2 user-input-label">
+                    <label for="insulin">Insulin:</label>
+                </div>
+                <div class="col-md-8 col-sm-12">
+                    <p>{{ insulin }}</p>
+                </div>
+            </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-md-4 col-sm-12 mb-2 user-input-label">
+                    <label for="bmi">BMI:</label>
+                </div>
+                <div class="col-md-8 col-sm-12">
+                    <p>{{ bmi }}</p>
+                </div>
+            </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-md-4 col-sm-12 mb-2 user-input-label">
+                    <label for="func">Diabetes Pedigree Function:</label>
+                </div>
+                <div class="col-md-8 col-sm-12">
+                    <p>{{ func }}</p>
+                </div>
+            </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-md-4 col-sm-12 mb-2 user-input-label">
+                    <label for="age">Age:</label>
+                </div>
+                <div class="col-md-8 col-sm-12">
+                    <p>{{ age }}</p>
+                </div>
+            </div>
+            
+            {% if prediction is defined %}
+            <div class="row justify-content-center">
+                <div class="col-md-4 col-sm-12 mb-2 user-input-label">
+                    <label for="outcome">Outcome:</label>
+                </div>
+                <div class="col-md-8 col-sm-12">
+                    <p>{{ "Positive" if prediction == 1 else "Negative" }}</p>
+                </div>
+            </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-md-12 col-sm-12 text-center">
+                    {% if prediction == 0 %}
+                        <p>It is unlikely for the patient to have diabetes!</p>
+                    {% else %}
+                        <p>It is highly likely that the patient already has or will have diabetes!</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+
+        </fieldset>
+    </div>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+</html>

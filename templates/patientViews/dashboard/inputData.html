@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <script src="https://use.fontawesome.com/590ef3f991.js"></script>
+    <link rel="stylesheet" href="../../../static/patientView/dashboard/inputData.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="navigation">
+        <ul>
+          <li>
+            <a href="#">
+              <span class="icon"
+                ><i class="fa fa-home" aria-hidden="true"></i></span>
+                <span class="title"><h2>Dashboard</h2></span>
+            </a>
+          </li>
+          <li>
+            <a href="profile.html">
+              <span class="icon"
+                ><i class="fa fa-user" aria-hidden="true"></i
+              ></span>
+              <span class="title">Profile</span>
+            </a>
+          </li>
+          <li>
+            <a href="inputData.html">
+              <span class="icon"
+                ><i class="fa fa-pencil" aria-hidden="true"></i
+              ></span>
+              <span class="title">Input data</span>
+            </a>
+          </li>
+          <li>
+            <a href="view_report.html">
+              <span class="icon"
+                ><i class="fa fa-eye" aria-hidden="true"></i
+              ></span>
+              <span class="title">View Report</span>
+            </a>
+          </li>
+          <li>
+            <a href="signout.html">
+              <span class="icon"
+                ><i class="fa fa-sign-out" aria-hidden="true"></i
+              ></span>
+              <span class="title">Signout</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="main">
+          <div class="topbar">
+            <div class="toggle" onclick="toggleMenu();"></div>
+          </div>
+          <div class="details">
+            <div class="recentOrders">
+              <div class="cardHeader">
+                <h2>Input Data</h2>
+              </div>
+              <form action="" method="">
+                <table>
+                  <thead>
+                    <tr>
+                      <td>Full Name</td>
+                      <td><input type="text"></td>
+                      <td>Pregnancies</td>
+                      <td><input type="number"></td>
+                    </tr>
+                  </thead>
+                  <thead>
+                    <tr>
+                      <td>Gender</td>
+                      <td>
+                        <select name="gender" required>
+                          <option disabled selected>Select gender</option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                        </select></td>
+                      <td>Glucose Level</td>
+                      <td><input type="number" placeholder="mg/dL"></td>
+                    </tr>
+                  </thead>
+                  <thead>
+                    <tr>
+                      <td>IC Number</td>
+                      <td><input type="text"></td>
+                      <td>Blood Presure</td>
+                      <td><input type="number" placeholder="mm/Hg"></td>
+                    </tr>
+                  </thead>
+                  <thead>
+                    <tr>
+                      <td>Age</td>
+                      <td><input type="number"></td>
+                      <td>Skin Thickness</td>
+                      <td><input type="number" placeholder="mm"></td>
+                    </tr>
+                  </thead>
+                  <thead>
+                    <tr>
+                      <td>Email</td>
+                      <td><input type="email"></td>
+                      <td>Insulin</td>
+                      <td><input type="number"></td>
+                    </tr>
+                  </thead>
+                  <thead>
+                    <tr>
+                      <td>Occupation</td>
+                      <td><input type="text"></td>
+                      <td>Body Mass Index (BMI)</td>
+                      <td><input type="number"></td>
+                    </tr>
+                  </thead>
+                  <thead>
+                    <tr>
+                      <td>Adress</td>
+                      <td><input type="text"></td>
+                      <td>Diabetes Pedigree Function</td>
+                      <td><input type="number"></td>
+                    </tr>
+                  </thead>
+                </table>
+                <div class="cardFooter">
+                  <input type="checkbox">
+                  <p>By cheaking the box you agree that your personal data will be processed as this system works and will not be disseminated anywhere.</p>
+                  <a href="#" class="btn">Submit</a>
+                </div>  
+              </form>
+            </div>    
+          </div>
+      </div>
+    </div>
+
+    <script>
+        function toggleMenu(){
+            let toggle = document.querySelector('.toggle')
+            let navigation = document.querySelector('.navigation')
+            let main = document.querySelector('.main')
+            toggle.classList.toggle('active')
+            navigation.classList.toggle('active')
+            main.classList.toggle('active')
+        }
+    </script>
+  </body>
+</html>

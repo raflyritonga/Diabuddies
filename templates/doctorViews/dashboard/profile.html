@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <script src="https://use.fontawesome.com/590ef3f991.js"></script>
+    <link rel="stylesheet" href="../../../static/doctorView/dashboard/profile.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="navigation">
+        <ul>
+          <li>
+            <a href="#">
+              <span class="icon"
+                ><i class="fa fa-home" aria-hidden="true"></i></span>
+                <span class="title"><h2>Dashboard</h2></span>
+            </a>
+          </li>
+          <li>
+            <a href="profile.html">
+              <span class="icon"
+                ><i class="fa fa-user" aria-hidden="true"></i
+              ></span>
+              <span class="title">Profile</span>
+            </a>
+          </li>
+          <li>
+            <a href="viewReport.html">
+              <span class="icon"
+                ><i class="fa fa-eye" aria-hidden="true"></i
+              ></span>
+              <span class="title">View Report</span>
+            </a>
+          </li>
+          <li>
+            <a href="signout.html">
+              <span class="icon"
+                ><i class="fa fa-sign-out" aria-hidden="true"></i
+              ></span>
+              <span class="title">Signout</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="main">
+          <div class="topbar">
+            <div class="toggle" onclick="toggleMenu();"></div>
+          </div>
+          <div class="details">
+            <div class="recentOrders">
+              <div class="cardHeader">
+                <h2>Doctor Information</h2>
+              </div>
+              <form action="" method="">
+                <table>
+                  <thead>
+                    <tr>
+                      <td>Full Name</td>
+                      <td><input type="text"></td>
+                    </tr>
+                  </thead>
+                  <thead>
+                    <tr>
+                      <td>Gender</td>
+                      <td>
+                        <select name="gender" required>
+                          <option disabled selected>Select gender</option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                        </select></td>
+                    </tr>
+                  </thead>
+                  <thead>
+                    <tr>
+                      <td>IC Number</td>
+                      <td><input type="text"></td>
+                    </tr>
+                  </thead>
+                  <thead>
+                    <tr>
+                      <td>Doctor ID</td>
+                      <td><input type="text"></td>
+                    </tr>
+                  </thead>
+                  <thead>
+                    <tr>
+                      <td>Date of Birth</td>
+                      <td><input type="date"></td>
+                    </tr>
+                  </thead>
+                  <thead>
+                    <tr>
+                      <td>Email</td>
+                      <td><input type="email"></td>
+                    </tr>
+                  </thead>
+                  <thead>
+                    <tr>
+                      <td>Hospital Placement</td>
+                      <td><input type="text"></td>
+                    </tr>
+                  </thead>
+                </table>
+                <div class="cardFooter">
+                  <a href="#" class="btn" >Edit</a>
+                </div>  
+              </form>
+            </div>    
+          </div>
+      </div>
+    </div>
+
+    <script>
+        function toggleMenu(){
+            let toggle = document.querySelector('.toggle')
+            let navigation = document.querySelector('.navigation')
+            let main = document.querySelector('.main')
+            toggle.classList.toggle('active')
+            navigation.classList.toggle('active')
+            main.classList.toggle('active')
+        }
+    </script>
+  </body>
+</html>
