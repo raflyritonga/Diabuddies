@@ -2,6 +2,7 @@ from flask import render_template, request, session, redirect
 from db import mysql
 import hashlib
 
+# ------ LOGIN PATIENT ------------
 def loginPatient():
     if request.method == 'POST':
         username = request.form.get('patient_username')
@@ -16,11 +17,17 @@ def loginPatient():
             cur.execute("SELECT * FROM patients WHERE username = %s", (username,))
             patient = cur.fetchone()
             if patient is not None:
-                storedPass = patient['password']
+                storedPass = patient[4]
                 if hashlib.md5(password.encode()).hexdigest() == storedPass:
+                    # session
                     session['username'] = username
-                    print('Login as ', session.get('username'), 'Successful!')
-                    return redirect('/dashboardpatient')
+                    print('Login as', session['username'], 'Successful!')
+                    if 'username' in session :
+                        user = session['username']
+                        print('This session belongs to ', user)
+                        return redirect('/dashboardpatient/profile') 
+                    else:
+                        return redirect('/loginpatient')              
                 else:
                     print('Incorrect Password')
                     return redirect('/loginpatient')
@@ -32,9 +39,13 @@ def loginPatient():
             return redirect('/loginpatient')    
     return render_template('patientViews/auth/loginPatient.html')
 
+
+# ------ LOGIN DOCTOR ------------
 def loginDoctor():
     return render_template('doctorViews/auth/loginDoctor.html')
 
+
+# ------ SIGNUP PATIENT ------------
 def signupPatient():
     if request.method == 'POST':
         fullName = request.form.get('patient_fullName')
@@ -62,8 +73,7 @@ def signupPatient():
                 cur.execute("INSERT INTO patients (ic_number, full_name, username, password) VALUES (%s, %s, %s, %s)", (icNumber, fullName, username, encryptedPassword))
                 conn.commit()
                 cur.close()
-                # session[username]
-                # redirect here
+
                 print('registered success')
                 return redirect('/loginpatient')
             else :
@@ -74,5 +84,7 @@ def signupPatient():
  
     return render_template('patientViews/auth/signupPatient.html')
 
+
+# ------ SIGNUP DOCTOR ------------
 def signupDoctor():
     return render_template('doctorViews/auth/signupDoctor.html')

@@ -27,9 +27,24 @@ def goToSignupPatient():
 def goToSignupDoctor():
     return authControllers.signupDoctor()
 
-@app.route('/dashboardpatient', methods = ['GET', 'POST'])
-def goToDahsboardPatient():
-    return dashboardControllers.home
+
+@app.route('/dashboardpatient/profile', methods = ['GET', 'POST'])
+def goToDahsboardPatient_profile():
+    return dashboardControllers.patientDashbboard_profile()
+
+@app.route('/dashboardpatient/input', methods = ['GET', 'POST'])
+def goToDahsboardPatient_inputData():
+    return dashboardControllers.patientDashbboard_inputData()
+
+@app.route('/dashboardpatient/report', methods = ['GET', 'POST'])
+def goToDahsboardPatient_viewReport():
+    return dashboardControllers.patientDashbboard_viewReport()
+
+@app.route('/dashboardpatient/signout', methods = ['GET', 'POST'])
+def goToDahsboardPatient_signout():
+    return dashboardControllers.patientDashbboard_signout()
+
+
 
 
 @app.route('/', methods=['GET'])
