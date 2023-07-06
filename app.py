@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 import pickle
-from controllers import authControllers
-from db import init_app, mysql
+from controllers import authControllers, dashboardControllers
+from db import init_app
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'supersecret'
@@ -26,6 +26,10 @@ def goToSignupPatient():
 @app.route('/signupdoctor', methods = ['GET', 'POST'])
 def goToSignupDoctor():
     return authControllers.signupDoctor()
+
+@app.route('/dashboardpatient', methods = ['GET', 'POST'])
+def goToDahsboardPatient():
+    return dashboardControllers.home
 
 
 @app.route('/', methods=['GET'])
