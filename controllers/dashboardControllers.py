@@ -1,16 +1,38 @@
 from flask import render_template, request, session, redirect
 from db import mysql
 
-def patientDashbboard_profile():
-    return render_template('patientViews/dashboard/profile.html')
+def patientDashboard_profile():
+    if request.method == 'POST':
+        return 0
 
-def patientDashbboard_inputData():
+
+
+
+
+    # get the session
+    username = session['username']
+    # database connection
+    conn = mysql.connection
+    print('database connected')
+    cur = conn.cursor()
+    # retrieve data from database based on user's session
+    cur.execute("SELECT * FROM patients WHERE username = %s", (username,))
+    patientInformation = cur.fetchone()
+    icNumber = patientInformation[1]
+    fullName = patientInformation[2]    
+    return render_template(
+        'patientViews/dashboard/profile.html',
+        icNumberInHTML = icNumber,
+        fullNameInHTML = fullName
+        )
+
+def patientDashboard_inputData():
     return render_template('patientViews/dashboard/inputData.html')
 
-def patientDashbboard_viewReport():
+def patientDashboard_viewReport():
     return render_template('patientViews/dashboard/viewReport.html')
 
-def patientDashbboard_signout():
+def patientDashboard_signout():
     return render_template('patientViews/auth/loginPatient.html')
 
 
