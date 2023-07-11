@@ -181,14 +181,13 @@ body{
 
 .btn{
     position: relative;
-    padding: 10px 30px;
+    padding: 10px 80px 10px 10px;
     background: rgb(214, 152, 66);
     color: #fff;
-    text-decoration: none;
     border-radius: 6px;
     font-family: 'Poppins',sans-serif;
     font-weight: 600;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
 }
 
 .details table{

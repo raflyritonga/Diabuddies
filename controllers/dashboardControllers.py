@@ -1,5 +1,6 @@
 from flask import render_template, request, session, redirect
 from db import mysql
+from datetime import date
 
 # ------------ PATIENT'S DASHBOARD LOGICS
 def patientDashboard_profile():
@@ -57,6 +58,41 @@ def patientDashboard_profile():
 
 def patientDashboard_inputData():
     username = session['username']
+    conn = mysql.connection
+    if request.method == 'POST':
+        # Personal Information
+        fullName = request.form.get('input_fullname')
+        gender = request.form.get('input_gender')
+        icNumber = request.form.get('input_icnumber')
+        age = request.form.get('input_age')
+        email = request.form.get('input_email')
+        occupation = request.form.get('input_occupation')
+        adress = request.form.get('input_adress')
+
+        # Medical data
+        pregnancies = request.form.get('input_pregnancies')
+        glucoseLevel = request.form.get('input_glucoselevel')
+        bloodPresure = request.form.get('input_bloodpresure')
+        skinThickness = request.form.get('input_skinthickness')
+        insulin = request.form.get('input_insulin')
+        bmi = request.form.get('input_bmi')
+        function = request.form.get('input_function')
+
+        # calling function to create PDF report
+        createPDF(
+            fullName, gender, icNumber, age, email, occupation, adress,
+            pregnancies, glucoseLevel, bloodPresure, skinThickness, insulin, bmi, function
+        )
+
+        # Saving the records into the database
+        todayDate = date.today()
+        cur = conn.cursor()
+        cur.execute("INSERT INTO reports (account, full_name, submission_date) VALUES (%s, %s, %s)", (username, fullName, todayDate))
+        conn.commit()
+        cur.close()
+
+
+
     return render_template('patientViews/dashboard/inputData.html')
 
 def patientDashboard_viewReport():
@@ -143,3 +179,10 @@ def doctorDashboard_signout():
 
     # Redirect to the homepage or any other desired page
     return redirect('/')
+
+
+def createPDF(
+        fullName, gender, icNumber, age, email, occupation, adress,
+        pregnancies, glucoseLevel, bloodPresure, skinThickness, insulin, bmi, function
+        ):
+    print('hhei')

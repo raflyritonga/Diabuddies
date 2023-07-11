@@ -63,14 +63,22 @@
               <div class="cardHeader">
                 <h2>Input Data</h2>
               </div>
-              <form action="" method="">
+              <form action="/dashboardpatient/input" method="post">
                 <table>
                   <thead>
                     <tr>
                       <td>Full Name</td>
-                      <td><input type="text"></td>
+                      <td><input 
+                        type = "text"
+                        name = "input_fullname"
+                        placeholder = "Enter your full name"
+                        required></td>
                       <td>Pregnancies</td>
-                      <td><input type="number"></td>
+                      <td><input 
+                        type="number"
+                        name = "input_pregnancies"
+                        placeholder = "Enter your Pregnancies"
+                        required></td>
                     </tr>
                   </thead>
                   <thead>
@@ -83,54 +91,99 @@
                           <option value="Female">Female</option>
                         </select></td>
                       <td>Glucose Level</td>
-                      <td><input type="number" placeholder="mg/dL"></td>
+                      <td><input 
+                        type="number" 
+                        name = "input_glucoselevel"
+                        placeholder = "mg/dL"
+                        required></td>
                     </tr>
                   </thead>
                   <thead>
                     <tr>
                       <td>IC Number</td>
-                      <td><input type="text"></td>
+                      <td><input 
+                        type="text"
+                        name = "input_icnumber"
+                        placeholder = "Enter your IC Number"
+                        required></td>
                       <td>Blood Presure</td>
-                      <td><input type="number" placeholder="mm/Hg"></td>
+                      <td><input 
+                        type="number" 
+                        name = "input_bloodpresure"
+                        placeholder = "mm/Hg"
+                        required></td>
                     </tr>
                   </thead>
                   <thead>
                     <tr>
                       <td>Age</td>
-                      <td><input type="number"></td>
+                      <td><input 
+                        type="number"
+                        name = "input_age"
+                        placeholder = "Enter your age"
+                        required></td>
                       <td>Skin Thickness</td>
-                      <td><input type="number" placeholder="mm"></td>
+                      <td><input 
+                        type="number" 
+                        placeholder="mm"
+                        name = "input_skinthickness"
+                        required></td>
                     </tr>
                   </thead>
                   <thead>
                     <tr>
                       <td>Email</td>
-                      <td><input type="email"></td>
+                      <td><input 
+                        type="email"
+                        name = "input_email"
+                        placeholder = "Enter your email"></td>
                       <td>Insulin</td>
-                      <td><input type="number"></td>
+                      <td><input 
+                        type="number"
+                        name = "input_insulin"
+                        placeholder = "Enter your Insulin"
+                        required></td>
                     </tr>
                   </thead>
                   <thead>
                     <tr>
                       <td>Occupation</td>
-                      <td><input type="text"></td>
+                      <td><input 
+                        type="text"
+                        name = "input_occupation"
+                        placeholder = "Enter your Occupation"></td>
                       <td>Body Mass Index (BMI)</td>
-                      <td><input type="number"></td>
+                      <td><input 
+                        type="number"
+                        name = "input_bmi"
+                        placeholder = "Enter your BMI"
+                        required></td>
                     </tr>
                   </thead>
                   <thead>
                     <tr>
                       <td>Adress</td>
-                      <td><input type="text"></td>
+                      <td><input 
+                        type="text"
+                        name = "input_adress"
+                        placeholder = "Enter your home adress"
+                        required></td>
                       <td>Diabetes Pedigree Function</td>
-                      <td><input type="number"></td>
+                      <td><input 
+                        type="number"
+                        name = "input_function"
+                        placeholder = "Your Diabetes Pedigree Function"
+                        required></td>
                     </tr>
                   </thead>
                 </table>
                 <div class="cardFooter">
-                  <input type="checkbox">
+                  <input 
+                  type="checkbox"
+                  name = "input_check"
+                  required>
                   <p>By cheaking the box you agree that your personal data will be processed as this system works and will not be disseminated anywhere.</p>
-                  <a href="#" class="btn">Submit</a>
+                  <input type="submit" class="btn" value="Submit" style="margin-left: -2px;">
                 </div>  
               </form>
             </div>    
