@@ -13,14 +13,14 @@
       <div class="navigation">
         <ul>
           <li>
-            <a href="#">
+            <a href="/dashboarddoctor/profile">
               <span class="icon"
                 ><i class="fa fa-home" aria-hidden="true"></i></span>
                 <span class="title"><h2>Dashboard</h2></span>
             </a>
           </li>
           <li>
-            <a href="profile.html">
+            <a href="/dashboarddoctor/profile">
               <span class="icon"
                 ><i class="fa fa-user" aria-hidden="true"></i
               ></span>
@@ -28,7 +28,7 @@
             </a>
           </li>
           <li>
-            <a href="viewReport.html">
+            <a href="/dashboarddoctor/report">
               <span class="icon"
                 ><i class="fa fa-eye" aria-hidden="true"></i
               ></span>
@@ -36,7 +36,7 @@
             </a>
           </li>
           <li>
-            <a href="signout.html">
+            <a href="/dashboarddoctor/signout">
               <span class="icon"
                 ><i class="fa fa-sign-out" aria-hidden="true"></i
               ></span>
@@ -55,58 +55,88 @@
               <div class="cardHeader">
                 <h2>Doctor Information</h2>
               </div>
-              <form action="" method="">
+              <form action="/dashboarddoctor/profile" method="post">
                 <table>
                   <thead>
                     <tr>
                       <td>Full Name</td>
-                      <td><input type="text"></td>
+                      <td><input 
+                        type="text" 
+                        value="{{ fullNameInHTML }}"
+                        name="doctor_fullname"
+                        placeholder="enter your full name"
+                        required></td>
                     </tr>
                   </thead>
                   <thead>
                     <tr>
                       <td>Gender</td>
                       <td>
-                        <select name="gender" required>
+                        <select name="doctor_gender" required>
                           <option disabled selected>Select gender</option>
-                          <option value="Male">Male</option>
-                          <option value="Female">Female</option>
+                          <option value="Male" {% if genderInHTML == 'Male'%} selected {% endif %}>Male</option>
+                          <option value="Female" {% if genderInHTML == 'Female'%} selected {% endif %}>Female</option>
                         </select></td>
                     </tr>
                   </thead>
                   <thead>
                     <tr>
                       <td>IC Number</td>
-                      <td><input type="text"></td>
+                      <td><input 
+                        type="text"
+                        value="{{ icNumberInHTML }}"
+                        name="doctor_icnumber"
+                        placeholder="enter your IC Number"
+                        required></td>
                     </tr>
                   </thead>
                   <thead>
                     <tr>
                       <td>Doctor ID</td>
-                      <td><input type="text"></td>
+                      <td><input 
+                        type="text"
+                        value="{{ doctorIdInHTML }}"
+                        name="doctor_doctorid"
+                        placeholder="enter your Doctor ID"
+                        required></td>
                     </tr>
                   </thead>
                   <thead>
                     <tr>
                       <td>Date of Birth</td>
-                      <td><input type="date"></td>
+                      <td><input 
+                        type="date"
+                        value="{{ dateOfBirthInHTML }}"
+                        name="doctor_dateofbirth"
+                        placeholder="enter your date of birth"
+                        required></td>
                     </tr>
                   </thead>
                   <thead>
                     <tr>
                       <td>Email</td>
-                      <td><input type="email"></td>
+                      <td><input 
+                        type="email"
+                        value="{{ emailInHTML }}"
+                        name="doctor_email"
+                        placeholder="enter your Email"
+                        required></td>
                     </tr>
                   </thead>
                   <thead>
                     <tr>
                       <td>Hospital Placement</td>
-                      <td><input type="text"></td>
+                      <td><input 
+                        type="text"
+                        value="{{ hospitalInHTML }}"
+                        name="doctor_hospital"
+                        placeholder="enter your Hospital Placement"
+                        required></td>
                     </tr>
                   </thead>
                 </table>
                 <div class="cardFooter">
-                  <a href="#" class="btn" >Edit</a>
+                  <input type="submit" value="Edit" class="btn"> 
                 </div>  
               </form>
             </div>    

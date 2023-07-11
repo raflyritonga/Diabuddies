@@ -4,30 +4,34 @@ from controllers import authControllers, dashboardControllers
 from db import init_app
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'supersecret'
+app.config['SECRET_KEY'] = 'rahasiaBangetNich'
 
 scaler = pickle.load(open('models/scaler.pkl', 'rb'))
 model = pickle.load(open('models/svm_model.pkl', 'rb'))
 
 init_app(app)
 
+# --------------- ROUTES FOR PATIENT AUTHENTICATION
+@app.route('/signuppatient', methods = ['GET', 'POST'])
+def goToSignupPatient():
+    return authControllers.signupPatient()
 @app.route('/loginpatient', methods = ['GET', 'POST'])
 def goToLoginPatient():
     return authControllers.loginPatient()
 
+
+
+# --------------- ROUTES FOR DOCTOR AUTHENTICATION
+@app.route('/signupdoctor', methods = ['GET', 'POST'])
+def goToSignupDoctor():
+    return authControllers.signupDoctor()
 @app.route('/logindoctor', methods = ['GET', 'POST'])
 def goToLoginDoctor():
     return authControllers.loginDoctor()
 
-@app.route('/signuppatient', methods = ['GET', 'POST'])
-def goToSignupPatient():
-    return authControllers.signupPatient()
-
-@app.route('/signupdoctor', methods = ['GET', 'POST'])
-def goToSignupDoctor():
-    return authControllers.signupDoctor()
 
 
+# -------------- ROUTES FOR PATIENT DASHBOARD
 @app.route('/dashboardpatient/profile', methods = ['GET', 'POST'])
 def goToDashboardPatient_profile():
     return dashboardControllers.patientDashboard_profile()
@@ -40,11 +44,23 @@ def goToDashsboardPatient_inputData():
 def goToDashsboardPatient_viewReport():
     return dashboardControllers.patientDashboard_viewReport()
 
-@app.route('/dashboardpatient/signout', methods = ['GET', 'POST'])
+@app.route('/dashboardpatient/signout')
 def goToDashsboardPatient_signout():
     return dashboardControllers.patientDashboard_signout()
 
 
+# -------------- ROUTES FOR DOCTOR DASHBOARD
+@app.route('/dashboarddoctor/profile', methods = ['GET', 'POST'])
+def goToDashboardDoctor_profile():
+    return dashboardControllers.doctorDashboard_profile()
+
+@app.route('/dashboarddoctor/report', methods = ['GET', 'POST'])
+def goToDashsboardDoctor_viewReport():
+    return dashboardControllers.doctorDashboard_viewReport()
+
+@app.route('/dashboarddoctor/signout')
+def goToDashsboardDoctor_signout():
+    return dashboardControllers.doctorDashboard_signout()
 
 
 @app.route('/', methods=['GET'])

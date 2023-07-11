@@ -13,7 +13,7 @@
       <div class="navigation">
         <ul>
           <li>
-            <a href="#">
+            <a href="/dashboardpatient/profile">
               <span class="icon"><i class="fa fa-home" aria-hidden="true"></i></span>
               <span class="title"><h2>Dashboard</h2></span>
             </a>
@@ -43,7 +43,7 @@
             </a>
           </li>
           <li>
-            <a href="signout.html">
+            <a href="/dashboardpatient/signout">
               <span class="icon"
                 ><i class="fa fa-sign-out" aria-hidden="true"></i
               ></span>
@@ -62,7 +62,7 @@
               <div class="cardHeader">
                 <h2>Patient Information</h2>
               </div>
-              <form action="" method="">
+              <form action="/dashboardpatient/profile" method="post">
                 <table>
                   <thead>
                     <tr>
@@ -70,7 +70,7 @@
                       <td><input 
                         type="text" 
                         value="{{ fullNameInHTML }}"
-                        name="patient_fullName"
+                        name="patient_fullname"
                         placeholder="enter your full name"
                         required></td>
                     </tr>
@@ -79,10 +79,10 @@
                     <tr>
                       <td>Gender</td>
                       <td>
-                        <select name="gender" required>
+                        <select name="patient_gender" required>
                           <option disabled selected>Select gender</option>
-                          <option value="Male">Male</option>
-                          <option value="Female">Female</option>
+                          <option value="Male" {% if genderInHTML == 'Male'%} selected {% endif %}>Male</option>
+                          <option value="Female" {% if genderInHTML == 'Female'%} selected {% endif %}>Female</option>
                         </select></td>
                     </tr>
                   </thead>
@@ -92,7 +92,7 @@
                       <td><input 
                         type="text"
                         value="{{ icNumberInHTML }}"
-                        name="patient_icNumber"
+                        name="patient_icnumber"
                         placeholder="enter your IC Number"
                         required></td>
                     </tr>
@@ -102,33 +102,47 @@
                       <td>Date of Birth</td>
                       <td><input 
                         type="date"
-                        value="{{ icNumberInHTML }}"
-                        name="patient_icNumber"
-                        placeholder="enter your IC Number"
-                        required></td>></td>
+                        value="{{ dateOfBirthInHTML }}"
+                        name="patient_dateofbirth"
+                        placeholder="enter date of birth"
+                        required></td>
                     </tr>
                   </thead>
                   <thead>
                     <tr>
                       <td>Email</td>
-                      <td><input type="email"></td>
+                      <td><input 
+                        type="email"
+                        value="{{ emailInHTML}}"
+                        name="patient_email"
+                        placeholder="enter email"
+                        required></td>
                     </tr>
                   </thead>
                   <thead>
                     <tr>
                       <td>Occupation</td>
-                      <td><input type="text"></td>
+                      <td><input 
+                        type="text"
+                        value="{{ occupationInHTML }}"
+                        name="patient_occupation"
+                        placeholder="enter your Occupation"
+                        required></td>
                     </tr>
                   </thead>
                   <thead>
                     <tr>
                       <td>Adress</td>
-                      <td><input type="text"></td>
+                      <td><input type="text"
+                        value="{{ adressInHTML }}"
+                        name="patient_adress"
+                        placeholder="enter your Adress"
+                        required></td>
                     </tr>
                   </thead>
                 </table>
                 <div class="cardFooter">
-                  <a href="#" class="btn" >Edit</a>
+                  <input type="submit" value="Edit" class="btn"> 
                 </div>  
               </form>
             </div>    
