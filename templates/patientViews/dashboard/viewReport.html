@@ -69,40 +69,29 @@
                     <td>Name of application</td>
                     <td>Date of submission</td>
                     <td>Status</td>
+                    <td></td>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>Abdul Bin Ahmad</td>
-                    <td>20/6/2023</td>
-                    <td><span class="status finished">Finished</span></td>
-                  </tr>
-                  <tr>
-                    <td>Wani Alyiah</td>
-                    <td>23/6/2023</td>
-                    <td><span class="status inprogress">In Progress</span></td>
-                  </tr>
-                  <tr>
-                    <td>Abdul Bin Ahmad</td>
-                    <td>26/6/2023</td>
-                    <td><span class="status pending">Pending</span></td>
-                  </tr>              
-                  <tr>
-                    <td>Budi Santoso</td>
-                    <td>27/6/2023</td>
-                    <td><span class="status failed">Failed</span></td>
-                  </tr>              
+                  {% for row in data %}
+                    {% set route = 'D:/05_development/Diabuddies/models/reports/' + row[2] + row[5].strftime('%Y-%m-%d') + '.pdf' %}
+                    <tr>
+                      <td>{{ row[2] }}</td>
+                      <td>{{ row[5] }}</td>
+                      {% if row[4] == 0 %}
+                        <td><span class="status pending">Waiting</span></td>
+                        <td><span><a href="{{ route }}" style="text-decoration: none; color: black;" target="_blank">View</a></span></td>
+                      {% elif row[4] == 1 %}
+                        <td><span class="status finished">Finished</span></td>
+                        <td><span><a href="{{ route }}" style="text-decoration: none; color: black;" target="_blank">View</a></span></td>
+                        {% endif %}
+                    </tr>
+                  {% endfor %}           
                 </tbody>
               </table>
             </div>
-
-      
-          
           </div>
-
-
       </div>
-
     </div>
 
     <script>

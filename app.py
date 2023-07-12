@@ -6,9 +6,6 @@ from db import init_app
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'rahasiaBangetNich'
 
-scaler = pickle.load(open('models/scaler.pkl', 'rb'))
-model = pickle.load(open('models/svm_model.pkl', 'rb'))
-
 init_app(app)
 
 # --------------- ROUTES FOR PATIENT AUTHENTICATION
@@ -65,28 +62,6 @@ def goToDashsboardDoctor_signout():
 
 @app.route('/', methods=['GET'])
 def input():
-
-    # prediction = -1
-    # name = None
-    # if request.method == 'POST':
-    #     name = request.form.get('name')
-    #     pregs = int(request.form.get('pregs'))
-    #     gluc = int(request.form.get('gluc'))
-    #     bp = int(request.form.get('bp'))
-    #     skin = int(request.form.get('skin'))
-    #     insulin = float(request.form.get('insulin'))
-    #     bmi = float(request.form.get('bmi'))
-    #     func = float(request.form.get('func'))
-    #     age = int(request.form.get('age'))
-
-    #     input_features = [[pregs, gluc, bp, skin, insulin, bmi, func, age]]
-    #     prediction = model.predict(scaler.transform(input_features))
-        
-        # Render inputs.html with user inputs
-        # return render_template('index.html', name=name, preg=pregs, gluc=gluc, bp=bp, skin=skin, insulin=insulin, bmi=bmi, func=func, age=age, prediction=prediction)
-    
-    # Render index.html with the prediction result
-    # return render_template('index.html', prediction=prediction, name=name)
     return render_template('index.html')
 
 if __name__ == '__main__':

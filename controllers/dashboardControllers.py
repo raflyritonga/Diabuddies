@@ -1,7 +1,13 @@
 from flask import render_template, request, session, redirect
 from db import mysql
 from datetime import date
+import pickle
+from fpdf import FPDF
+import os
 
+scaler = pickle.load(open('models/scaler.pkl', 'rb'))
+model = pickle.load(open('models/svm_model.pkl', 'rb'))
+ 
 # ------------ PATIENT'S DASHBOARD LOGICS
 def patientDashboard_profile():
     # get the session
@@ -59,6 +65,8 @@ def patientDashboard_profile():
 def patientDashboard_inputData():
     username = session['username']
     conn = mysql.connection
+    prediction = -1
+    
     if request.method == 'POST':
         # Personal Information
         fullName = request.form.get('input_fullname')
@@ -78,27 +86,46 @@ def patientDashboard_inputData():
         bmi = request.form.get('input_bmi')
         function = request.form.get('input_function')
 
-        # calling function to create PDF report
-        createPDF(
-            fullName, gender, icNumber, age, email, occupation, adress,
-            pregnancies, glucoseLevel, bloodPresure, skinThickness, insulin, bmi, function
-        )
+        # using machine learning model
+        input_features = [[pregnancies, glucoseLevel, bloodPresure, skinThickness, insulin, bmi, function, age]]
+        prediction = model.predict(scaler.transform(input_features))
 
         # Saving the records into the database
+        print('database connected')
         todayDate = date.today()
         cur = conn.cursor()
-        cur.execute("INSERT INTO reports (account, full_name, submission_date) VALUES (%s, %s, %s)", (username, fullName, todayDate))
+        cur.execute("INSERT INTO reports (account, full_name, result, submission_date) VALUES (%s, %s, %s, %s)", (username, fullName, int(prediction), todayDate))
         conn.commit()
         cur.close()
 
-
-
+        # calling function to create PDF report
+        createPDF(
+            fullName, gender, icNumber, age, email, occupation, adress,
+            pregnancies, glucoseLevel, bloodPresure, skinThickness, insulin, bmi, function,
+            prediction, todayDate
+        )   
+        print(prediction)
+        print("data inputed successful")
+        return redirect('/dashboardpatient/report')
     return render_template('patientViews/dashboard/inputData.html')
 
 def patientDashboard_viewReport():
     username = session['username']
-    return render_template('patientViews/dashboard/viewReport.html')
+    conn = mysql.connection
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM reports WHERE account = %s", (username,))
+    data = cur.fetchall()
 
+
+    return render_template('patientViews/dashboard/viewReport.html', data = data)
+
+    # for row in data:
+    #     fullName = row[2]
+    #     submissionDate = row[5]
+    #     fileName = str(fullName) + str(submissionDate)
+
+    # pdf_file = 'D:/05_development/Diabuddies/models/reports/' + fileName + '.pdf'
+    # , pdf_file = pdf_file
 def patientDashboard_signout():
     # Get the session
     username = session['username']
@@ -180,9 +207,75 @@ def doctorDashboard_signout():
     # Redirect to the homepage or any other desired page
     return redirect('/')
 
-
 def createPDF(
         fullName, gender, icNumber, age, email, occupation, adress,
-        pregnancies, glucoseLevel, bloodPresure, skinThickness, insulin, bmi, function
-        ):
-    print('hhei')
+        pregnancies, glucoseLevel, bloodPresure, skinThickness, insulin, bmi, function,
+        prediction, todayDate):
+    
+    if prediction == 0:
+        result = 'NEGATIVE'
+    else:
+        result = 'POSITIVE'
+
+    currDate = date.today()
+    class PDF(FPDF):
+        def header(self):
+        #    set font    
+            self.set_font('courier', 'I', 10)
+        #    set text
+            self.cell(0, 10, 'AUTO GENERATED REPORT', border = True, ln = 1, align = 'C')
+            self.cell(0, 10, 'submission date: ' + todayDate.strftime('%Y-%m-%d'), ln = 1, align = 'R')
+            self.cell(0, 10, 'generated on:  ' + currDate.strftime('%Y-%m-%d'), ln = 1, align = 'R')
+            
+    # create the pdf
+    pdf = PDF('P', 'mm', 'Letter')
+
+    # set auto page break
+    pdf.set_auto_page_break(auto = 1, margin = 5)
+
+    #add page
+    pdf.add_page()
+
+    # specify font and text
+    pdf.set_font ('courier', 'B', 12)
+    pdf.cell(40,10, 'Personal Information:', ln = 1 )
+
+    pdf.set_font ('courier', '', 12)
+    pdf.cell(40,10, 'Name: ' + str(fullName) , ln = 1)
+    pdf.cell(40,10, 'IC Number: ' + str(icNumber), ln = 1)
+    pdf.cell(40,10, 'Gender: ' + str(gender), ln = 1)
+    pdf.cell(40,10, 'Age: ' + str(age), ln = 1)
+    pdf.cell(40,10, 'Email: ' + str(email), ln = 1)
+    pdf.cell(40,10, 'Occupation: ' + str(occupation), ln = 1)
+    pdf.cell(40,10, 'Adress: ' + str(adress), ln = 1)
+
+    # specify font and text
+    pdf.cell(40,10, '', ln = 1)
+    pdf.set_font ('courier', 'B', 12)
+    pdf.cell(40,10, 'Medical Information:', ln = 1 )
+
+    pdf.set_font ('courier', '', 12)
+    pdf.cell(40,10, 'Pregnancies: ' + str(pregnancies), ln = 1)
+    pdf.cell(40,10, 'Glucose Level: ' + str(glucoseLevel), ln = 1)
+    pdf.cell(40,10, 'Blood Preasure: ' + str(bloodPresure), ln = 1)
+    pdf.cell(40,10, 'Skin Thickness: ' + str(skinThickness), ln = 1)
+    pdf.cell(40,10, 'Insulin: ' + str(insulin), ln = 1)
+    pdf.cell(40,10, 'Body Mass Index: ' + str(bmi), ln = 1)
+    pdf.cell(40,10, 'Diabetes Pedigree Function: ' + str(function), ln = 1)
+
+    pdf.cell(40,10, '', ln = 1)
+    pdf.cell(40,10, 'By the input data above, your test result is', ln = 1)
+
+    pdf.set_font ('courier', 'BU', 12)
+    pdf.cell(200,10, result, ln = 1)
+
+    pdf.set_font ('courier', '', 12)
+    pdf.cell(40,10, '', ln = 1)
+    pdf.cell(40,10, 'Regrads', ln = 1)
+    pdf.cell(40,10, 'Diabuddies', ln = 1)
+
+    # save the file
+    output_folder = 'D:/05_development/Diabuddies/models/reports'
+    output_filename = f"{fullName}{currDate.strftime('%Y-%m-%d')}.pdf"
+    output_path = f"{output_folder}/{output_filename}"
+    pdf.output(output_path)
