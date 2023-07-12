@@ -3,7 +3,6 @@ from db import mysql
 from datetime import date
 import pickle
 from fpdf import FPDF
-import os
 
 scaler = pickle.load(open('models/scaler.pkl', 'rb'))
 model = pickle.load(open('models/svm_model.pkl', 'rb'))
@@ -116,16 +115,8 @@ def patientDashboard_viewReport():
     cur.execute("SELECT * FROM reports WHERE account = %s", (username,))
     data = cur.fetchall()
 
-
     return render_template('patientViews/dashboard/viewReport.html', data = data)
 
-    # for row in data:
-    #     fullName = row[2]
-    #     submissionDate = row[5]
-    #     fileName = str(fullName) + str(submissionDate)
-
-    # pdf_file = 'D:/05_development/Diabuddies/models/reports/' + fileName + '.pdf'
-    # , pdf_file = pdf_file
 def patientDashboard_signout():
     # Get the session
     username = session['username']
@@ -193,8 +184,11 @@ def doctorDashboard_profile():
     )
 
 def doctorDashboard_viewReport():
-    username = session['username']
-    return render_template('doctorViews/dashboard/viewReport.html')
+    conn = mysql.connection
+    cur = conn.cursor()      
+    cur.execute("SELECT * FROM reports WHERE status = 0")
+    data = cur.fetchall()
+    return render_template('doctorViews/dashboard/viewReport.html', data = data)
 
 def doctorDashboard_signout():
     # Get the session
@@ -206,6 +200,25 @@ def doctorDashboard_signout():
 
     # Redirect to the homepage or any other desired page
     return redirect('/')
+
+def doctorDashboard_viewReportValidate():
+    conn = mysql.connection
+    cur = conn.cursor()
+    
+    if request.method == 'POST':
+        requestData = request.get_json()
+        fullName = requestData.get('name')
+        submissionDate = requestData.get('date')
+        status = 1
+        cur.execute("""UPDATE reports
+                    SET status = %s WHERE full_name = %s AND submission_date = %s""", (status, fullName, submissionDate))
+        conn.commit()
+        print(fullName)
+        print(submissionDate)
+        print('Status changed')
+    else:
+        print('ERROR')
+    return redirect ('/dashboarddoctor/report')
 
 def createPDF(
         fullName, gender, icNumber, age, email, occupation, adress,

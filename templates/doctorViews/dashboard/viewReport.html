@@ -4,8 +4,10 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Dashboard</title>
+    <title>Doctor Dashboard</title>
     <script src="https://use.fontawesome.com/590ef3f991.js"></script>
+    <link rel = "icon" href ="../../../static/assets/logo.png" type ="image/x-icon">
+    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../../../static/viewReport.css" />
   </head>
   <body>
@@ -60,35 +62,25 @@
                   <tr>
                     <td>Name of application</td>
                     <td>Date of submission</td>
-                    <td>Validate</td>
-                    <td>Status</td>
+                    <td></td>
+                    <td></td>
                   </tr>
                 </thead>
                 <tbody>
+                  {% for row in data %}
                   <tr>
-                    <td>Abdul Bin Ahmad</td>
-                    <td>20/6/2023</td>
-                    <td><input type="checkbox" name="" id=""></td>
-                    <td><span class="status finished">Finished</span></td>
+                    <td class="fullNameField">{{ row[2] }}</td>
+                    <td class="subsDateField">{{ row[5] }}</td>
+                    <td>
+                      <form action="/dashboarddoctor/report" method="post">
+                        <input type="submit" name="validate" class="validateBtn" value="Validate" style="padding: 5px;">
+                      </form>
+                    </td>
+                    <td>
+                      <button class="viewBtn" style="padding: 7px; color: black;" target="_blank">View</button>
+                    </td>
                   </tr>
-                  <tr>
-                    <td>Wani Alyiah</td>
-                    <td>23/6/2023</td>
-                    <td><input type="checkbox" name="" id=""></td>
-                    <td><span class="status inprogress">In Progress</span></td>
-                  </tr>
-                  <tr>
-                    <td>Abdul Bin Ahmad</td>
-                    <td>26/6/2023</td>
-                    <td><input type="checkbox" name="" id=""></td>
-                    <td><span class="status pending">Pending</span></td>
-                  </tr>              
-                  <tr>
-                    <td>Budi Santoso</td>
-                    <td>27/6/2023</td>
-                    <td><input type="checkbox" name="" id=""></td>
-                    <td><span class="status failed">Failed</span></td>
-                  </tr>              
+                  {% endfor %}          
                 </tbody>
               </table>
             </div>
@@ -97,14 +89,72 @@
     </div>
 
     <script>
-        function toggleMenu(){
-            let toggle = document.querySelector('.toggle')
-            let navigation = document.querySelector('.navigation')
-            let main = document.querySelector('.main')
-            toggle.classList.toggle('active')
-            navigation.classList.toggle('active')
-            main.classList.toggle('active')
+        const validateBtn = document.getElementsByClassName('validateBtn');
+        const nameFields = document.getElementsByClassName("fullNameField"); 
+        const dateFields = document.getElementsByClassName("subsDateField"); 
+        const viewBtn = document.getElementsByClassName('viewBtn')
+        
+        function initializeValidateBtn(){
+          for (let i = 0; i < validateBtn.length; i++){
+            validateBtn[i].addEventListener('click', () => {
+              sendingData(nameFields[i].textContent, dateFields[i].textContent)
+              console.log(`button where ${nameFields[i].textContent} clicked`)
+            })
+          }
         }
+        
+      function sendingData(nameData, dateData){
+        // Get the data from your form or any other source
+        var data = {
+          name: nameData,
+          date: dateData
+        };
+
+        // Make a POST request to the backend
+        fetch('http://127.0.0.1:5000/dashboarddoctor/report/validate', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+          // Handle the response from the backend
+          console.log(data);
+        })
+        .catch(error => {
+          // Handle any errors that occurred during the request
+          console.error('Error:', error);
+        });
+      }
+
+      function initializeViewBtn (){
+          for (let i = 0; i < viewBtn.length; i++){
+              viewBtn[i].addEventListener('click', () => {
+                showPDF(nameFields[i].textContent, dateFields[i].textContent)
+                // showPDF()
+            })
+          }
+      }
+
+      function showPDF(name, date){
+        // var filePath = `https://drive.google.com/file/d/1ofMZVTG90hIDGflAZ9d95vSnT_8MhxXb/view?usp=sharing`;
+        var filePath = `D:/05_development/Diabuddies/models/reports/${name}${date}.pdf`;
+        window.open(filePath);
+      }
+        
+      function toggleMenu(){
+        let toggle = document.querySelector('.toggle')
+        let navigation = document.querySelector('.navigation')
+        let main = document.querySelector('.main')
+        toggle.classList.toggle('active')
+        navigation.classList.toggle('active')
+        main.classList.toggle('active')
+      }
+
+      initializeViewBtn ()
+      initializeValidateBtn();
     </script>
   </body>
 </html>

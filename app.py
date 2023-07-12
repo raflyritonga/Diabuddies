@@ -55,6 +55,10 @@ def goToDashboardDoctor_profile():
 def goToDashsboardDoctor_viewReport():
     return dashboardControllers.doctorDashboard_viewReport()
 
+@app.route('/dashboarddoctor/report/validate', methods = ['GET', 'POST'])
+def goToDashsboardDoctor_viewReportValidate():
+    return dashboardControllers.doctorDashboard_viewReportValidate()
+
 @app.route('/dashboarddoctor/signout')
 def goToDashsboardDoctor_signout():
     return dashboardControllers.doctorDashboard_signout()

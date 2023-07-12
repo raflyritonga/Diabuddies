@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Dashboard</title>
+    <title>Patient Dashboard</title>
+    <link rel = "icon" href ="../../../static/assets/logo.png" type ="image/x-icon">
     <script src="https://use.fontawesome.com/590ef3f991.js"></script>
     <link rel="stylesheet" href="../../../static/viewReport.css" />
   </head>
@@ -74,16 +75,19 @@
                 </thead>
                 <tbody>
                   {% for row in data %}
-                    {% set route = 'D:/05_development/Diabuddies/models/reports/' + row[2] + row[5].strftime('%Y-%m-%d') + '.pdf' %}
                     <tr>
-                      <td>{{ row[2] }}</td>
-                      <td>{{ row[5] }}</td>
+                      <td class="fullNameField">{{ row[2] }}</td>
+                      <td class="subsDateField">{{ row[5] }}</td>
                       {% if row[4] == 0 %}
                         <td><span class="status pending">Waiting</span></td>
-                        <td><span><a href="{{ route }}" style="text-decoration: none; color: black;" target="_blank">View</a></span></td>
-                      {% elif row[4] == 1 %}
+                        <td><span>
+                          <button class="viewBtn" disabled style="padding: 7px; color: black;" target="_blank">View</button>
+                        </span></td>
+                        {% elif row[4] == 1 %}
                         <td><span class="status finished">Finished</span></td>
-                        <td><span><a href="{{ route }}" style="text-decoration: none; color: black;" target="_blank">View</a></span></td>
+                        <td>
+                          <button class="viewBtn" style="padding: 7px; color: black;" target="_blank">View</button>
+                        </td>
                         {% endif %}
                     </tr>
                   {% endfor %}           
@@ -95,14 +99,37 @@
     </div>
 
     <script>
-        function toggleMenu(){
-            let toggle = document.querySelector('.toggle')
-            let navigation = document.querySelector('.navigation')
-            let main = document.querySelector('.main')
-            toggle.classList.toggle('active')
-            navigation.classList.toggle('active')
-            main.classList.toggle('active')
+
+      const viewBtn = document.getElementsByClassName('viewBtn')
+      const nameFields = document.getElementsByClassName("fullNameField"); 
+      const dateFields = document.getElementsByClassName("subsDateField"); 
+
+      function initializeViewBtn (){
+        for (let i = 0; i < viewBtn.length; i++){
+            viewBtn[i].addEventListener('click', () => {
+              showPDF(nameFields[i].textContent, dateFields[i].textContent)
+              // showPDF()
+          })
         }
+      }
+
+      function showPDF(name, date){
+        // var filePath = `https://drive.google.com/file/d/1P7almdUFdswkj7vSyPt8JrUjwhi5I12d/view?usp=sharing`;
+        var filePath = `D:/05_development/Diabuddies/models/reports/${name}${date}.pdf`;
+        window.open(filePath);
+      }
+
+      function toggleMenu(){
+        let toggle = document.querySelector('.toggle')
+        let navigation = document.querySelector('.navigation')
+        let main = document.querySelector('.main')
+        toggle.classList.toggle('active')
+        navigation.classList.toggle('active')
+        main.classList.toggle('active')
+      }
+
+      initializeViewBtn()
+
     </script>
   </body>
 </html>
